@@ -1,0 +1,90 @@
+
+<!doctype html>
+<html ng-app="myModule">
+<head>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="Script.js"></script>
+    <link href="Styles.css" rel="stylesheet" />
+</head>
+<body ng-app="myModule">
+
+    <div ng-controller="my2Controller">
+   show/hide salary  <input type="checkbox" ng-model="showhidesalary" />
+        Search : <input type="text" placeholder="Search city & name"
+                        ng-model="searchText" />
+        <br /><br />
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th ng-show="showhidesalary">Salary</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees | filter: search">
+                    <td> {{ employee.name }} </td>
+                    <td> {{ employee.gender | gender }} </td>
+                    <td ng-show="showhidesalary"> {{ employee.salary  }} </td>
+                    <td> {{ employee.city  }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+
+
+    <div ng-controller="my1Controller">
+        <input type="text" placeholder="Search name" ng-model="searchText.name" />
+        <input type="text" placeholder="Search city" ng-model="searchText.city" />
+        <input type="checkbox" ng-model="exactMatch" /> Exact Match
+        <br /><br />
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Salary</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees | filter: searchText : exactMatch">
+                    <td> {{ employee.name }} </td>
+                    <td> {{ employee.gender | gender }} </td>
+                    <td> {{ employee.salary  }} </td>
+                    <td> {{ employee.city  }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div ng-controller="myController">
+        Rows to display : <input type="number" step="1"
+                                 ng-model="rowCount" max="5" min="0" />
+        <br /><br />
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Gender</th>
+                    <th>Salary (number filter)</th>
+                    <th>Salary (currency filter)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees | limitTo:rowCount">
+                    <td> {{ employee.name | uppercase }} </td>
+                    <td> {{ employee.dateOfBirth | date:"dd/MM/yyyy" }} </td>
+                    <td> {{ employee.gender }} </td>
+                    <td> {{ employee.salary | number:2 }} </td>
+                    <td> {{ employee.salary | currency : "£" : 1 }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
